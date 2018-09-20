@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview &mdash; ELLIE 1.0.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="ELLIE 1.0.0 documentation" href="../index.html"/>
+        <link rel="next" title="Tutorial" href="tutorial.html"/>
+        <link rel="prev" title="Installation" href="installation.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ELLIE
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#summary-of-ellie-functionality">Summary of ELLIE Functionality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#faq">FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">ELLIE</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">ellie</a> &raquo;</li>
+      
+    
+      <li>Overview</li>
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="overview">
+<span id="id1"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary-of-ellie-functionality">
+<h2>Summary of ELLIE Functionality<a class="headerlink" href="#summary-of-ellie-functionality" title="Permalink to this headline">¶</a></h2>
+<p>The purpose of ELLIE is to go from TESS Full Frame Images to extracted and systematics-corrected light curves for any given star observed by TESS.
+In its simplest form, ELLIE takes a TIC ID, a Gaia source ID, or (RA, Dec) coordinates of a star observed by TESS and returns a light curve and accompanying target pixel file.
+There’s plenty of customizability along the way, though: you can examine intermediate data products, change the aperture used for light curve extraction, and much more.
+The <a class="reference internal" href="tutorial.html#Tutorial"><span class="std std-ref">tutorial</span></a> goes through these procedures in more detail.</p>
+</div>
+<div class="section" id="faq">
+<h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt>How does ELLIE work?</dt>
+<dd><dl class="first last docutils">
+<dt>Under the hood, when you query an object, ELLIE performs the following steps:</dt>
+<dd><ul class="first last simple">
+<li>Locates the object on TESS’s many cameras/chips.</li>
+<li>Downloads a time series of “postcards” containing TESS data for the object and its immediate surroundings.</li>
+<li>Creates and stores a target pixel file (TPF) of the object.</li>
+<li>Traces centroid shifts for the object across the time series.</li>
+<li>Chooses an optimal pixel aperture for photometry.</li>
+<li>Creates a light curve using the chosen aperture and centroid trace.</li>
+<li>Performs basic systematics corrections on the light curve and stores it.</li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>What final data products do I get from ELLIE?</dt>
+<dd><p class="first last">By default, ELLIE delivers the systematics-corrected light curve of your source and the source’s TPF. If you are happy with what you see there, you’re done and ready to science!</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>How can I customize ELLIE for my source?</dt>
+<dd><p class="first last">If you want to dig a little bit deeper, ELLIE delivers several other data products to help you do that. The TPF carries with it a trace of the source’s centroid through time and a record of the aperture used. This makes it easier for you to check for possible issues and reproduce the analysis. ELLIE even has tools to help you change the aperture used and more. See the <a class="reference internal" href="tutorial.html#Tutorial"><span class="std std-ref">tutorial</span></a> for examples.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>What is a target pixel file (TPF)?</dt>
+<dd><p class="first last">Target pixel files are essentially a stack of images of the source, one image per FFI. They differ from postcards because they’re only a few pixels on a side. For more information, see <a class="reference external" href="https://lightkurve.keplerscience.org/tutorials/1.02-target-pixel-files.html">lightkurve</a>. TPF objects in ELLIE carry additional attributes: the centroid trace and the aperture. Taken together, these provide all the information you need to reproduce the light curve.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>What are ELLIE’s intermediate data products and how can I access them?</dt>
+<dd><p class="first last">ELLIE is designed to save you, the user, from having to download the entire TESS FFIs to get at a small region of sky. To do this, ELLIE produces “postcard” files which are more manageable subsets of each detector chip. These postcards can be downloaded and accessed through the ELLIE <a class="reference internal" href="../api.html#api"><span class="std std-ref">API</span></a>. Postcards also carry with them an associated pointing model.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>What is the pointing model?</dt>
+<dd><p class="first last">The pointing model consists of a few simple parameters that describe how to go from TESS pixels to an accurate world coordinate system. ELLIE optimizes this pointing model using bright stars across the postcard. Most users will never need to touch the pointing model, though - its information gets encoded in the centroid trace for any given source.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>What kinds of systematic noise in the light curves can ELLIE correct?</dt>
+<dd><p class="first last">By default, ELLIE corrects the light curve by 1) regressing out jitter using a quadratic fit to the centroid trace and 2) correcting for spacecraft roll with the self-flat-fielding (SFF) method as implemented in <a class="reference external" href="https://lightkurve.keplerscience.org/api/lightkurve.correctors.SFFCorrector.html">lightkurve</a>. Future versions of ELLIE may include more advanced detrending that makes use of all sources on a given postcard or chip.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>My light curve has weird features. What gives?</dt>
+<dd><p class="first">Here are a few things you can easily check on: are there changes in the object centroid coincident with the features? Does the aperture choice make sense? Are there blended background sources?</p>
+<p class="last">If these checks don’t turn up anything and you suspect a problem with the code, feel free to open a <a class="reference external" href="http://github.com/afeinstein20/ELLIE/issues">Git Issue</a>.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">How do I cite ELLIE in a published work?</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="installation.html" class="btn btn-neutral" title="Installation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Adina Feinstein.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
